@@ -1,10 +1,9 @@
 
 
 # node-red-contrib-herokupg
-Node-red-contrib-postgrestor :space_invader: is a [**Node-RED**](http://nodered.org/) node allowing basic access to [**Postgres**](https://www.postgresql.org/) :elephant: database.
+Node-red-contrib-herokupg  is a [**Node-RED**](http://nodered.org/) node allowing basic access to [**Postgres**](https://www.postgresql.org/) :elephant: database.
 
-This fork has been modified to use a postgres URL as the connection details specifically the format used by the Heroku addon
-
+This is a fork of the [postgrestor](https://github.com/andreabat/node-red-contrib-postgrestor) that has been modified to use a postgres URL as the connection details specifically the format used by the Heroku addon suplied in an environment varible.
 
 Pass them as a parameter array  ***params** of the msg object.
 
