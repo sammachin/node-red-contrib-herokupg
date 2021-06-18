@@ -1,14 +1,10 @@
 {
-  "name": "node-red-contrib-postgrestor-next",
-  "version": "0.0.9c",
-  "scripts": {
-    "ci-publish": "ci-publish",
-    "test": "eslint postgrestor.js"
-  },
-  "description": "Yet another Node-RED node to query PostgreSQL with query parameters",
+  "name": "node-red-contrib-postgres-heroku",
+  "version": "0.0.1",
+  "description": "Postgres Node Optimised for use with Heroku attached databases",
   "author": {
-    "name": "Andrea Batazzi",
-    "email": "andrea.batazzi@gmail.com"
+    "name": "Sam Machin",
+    "email": "sam@sammachin.com"
   },
   "dependencies": {
     "mustache": "^4.0.1",
@@ -17,21 +13,17 @@
   "license": "Apache",
   "repository": {
     "type": "git",
-    "url": "https://github.com/andreabat/node-red-contrib-postgrestor"
+    "url": "https://github.com/sammachin/node-red-contrib-postgres-heroku"
   },
   "keywords": [
     "node-red",
     "postgresql",
-    "postgres"
+    "postgres",
+    "heroku"
   ],
   "node-red": {
     "nodes": {
-      "postgrestor": "postgrestor.js"
+      "herokupostgres": "herokupostgres.js"
     }
-  },
-  "devDependencies": {
-    "ci-publish": "^1.3.1",
-    "eslint": "^6.8.0",
-    "eslint-config-google": "^0.14.0"
   }
 }

@@ -1,9 +1,9 @@
 
 
-# node-red-contrib-pg
+# node-red-contrib-herokupg
 Node-red-contrib-postgrestor :space_invader: is a [**Node-RED**](http://nodered.org/) node allowing basic access to [**Postgres**](https://www.postgresql.org/) :elephant: database.
 
-This fork has updated dependencies and allows to **Parameterized query**
+This fork has been modified to use a postgres URL as the connection details specifically the format used by the Heroku addon
 
 
 Pass them as a parameter array  ***params** of the msg object.
@@ -33,36 +33,3 @@ SELECT * FROM table where name = $1;
 
 msg.params = ['Andrea'] 
 
-## Installation
-
-#### Using the Node-RED Editor
-From version 0.15 of [**Node-RED**](http://nodered.org/) you can install [**node-red-contrib-postgrestor**](https://github.com/andreabat/node-red-contrib-postgrestor) directly using the editor. To do this select ```Manage Palette``` from the menu (top right), and then select the ```install``` tab in the palette.
-
-You can now search for [**node-red-contrib-postgrestor**](https://github.com/andreabat/node-red-contrib-postgrestor) to install.
-
-
-#### Installing npm packaged nodes
-To install [**node-red-contrib-postgrestor**](https://github.com/andreabat/node-red-contrib-postgrestor) npm-packaged node, you can also, either install it locally within your user data directory (by default, ```$HOME/.node-red```):
-```bash
-cd $HOME/.node-red
-npm i node-red-contrib-postgrestor-next
-```
-or globally alongside Node-RED:
-```bash
-npm i -g node-red-contrib-postgrestor-next
-```
-You will need to restart Node-RED for it to pick-up [**node-red-contrib-postgrestor**](https://github.com/ymedlop/node-red-contrib-postgrestor).
-
-
-[![NPM](https://nodei.co/npm/node-red-contrib-postgrestor-next.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/node-red-contrib-postgrestor-next/)
-
-
-## Screen shots
-<p align="center">
-<img src="http://i.imgur.com/D03T3vH.png" width="600">
-<img src="https://i.imgur.com/43qkUp5.png" width="600">
-<img src="https://i.imgur.com/lJjLJTN.png" width="600">
-<img src="https://i.imgur.com/yYaO09Q.png" width="600">
-<img src="https://i.imgur.com/fHBxpB9.png" width="600">
-<img src="https://i.imgur.com/7vDSn1r.png" width="600">
-</p>
