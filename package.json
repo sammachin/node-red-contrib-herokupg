@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-postgres-heroku",
   "version": "0.1.0",
-  "description": "Postgres Node Optimised for use with Heroku attached databases",
+  "description": "Postgres Node optimised for use with Heroku attached databases",
   "author": {
     "name": "Sam Machin",
     "email": "sam@sammachin.com"
