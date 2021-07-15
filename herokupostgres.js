@@ -73,10 +73,10 @@ module.exports = function (RED) {
             client.release();
           }
           msg.payload = {}
-          msg.payload.rows = res.rows
-          msg.payload.fields = res.fields
-          msg.payload.rowCount = res.rowCount
           msg.payload.command = res.command
+          msg.payload.rowCount = res.rowCount
+          msg.payload.oid = res.oid
+          msg.payload.rows = res.rows
           node.send(msg);
         }
       };

@@ -1,0 +1,206 @@
+[
+    {
+        "id": "36def501.102e7a",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "7a52702b.b1b3a",
+        "type": "HerokuPG",
+        "z": "36def501.102e7a",
+        "name": "SELECT all users",
+        "query": "SELECT * FROM \"users\" ;",
+        "postgresDB": "3057ca48.88315e",
+        "output": true,
+        "outputs": 1,
+        "x": 530,
+        "y": 580,
+        "wires": [
+            [
+                "ecea5579.2bac08"
+            ]
+        ]
+    },
+    {
+        "id": "ecea5579.2bac08",
+        "type": "debug",
+        "z": "36def501.102e7a",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 890,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "b5babfe33378d6b7",
+        "type": "HerokuPG",
+        "z": "36def501.102e7a",
+        "name": "Create Table",
+        "query": "CREATE TABLE IF NOT EXISTS \"users\" (\n      id SERIAL PRIMARY KEY,\n      name character varying(255) NOT NULL,\n      number text\n    );\n\t\n\t\n\t",
+        "postgresDB": "3057ca48.88315e",
+        "output": true,
+        "outputs": 1,
+        "x": 530,
+        "y": 300,
+        "wires": [
+            [
+                "ecea5579.2bac08"
+            ]
+        ]
+    },
+    {
+        "id": "44ac9cd1.2dcb9c",
+        "type": "inject",
+        "z": "36def501.102e7a",
+        "name": "Inject",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 270,
+        "y": 580,
+        "wires": [
+            [
+                "7a52702b.b1b3a"
+            ]
+        ]
+    },
+    {
+        "id": "dbabb35b0dd54324",
+        "type": "inject",
+        "z": "36def501.102e7a",
+        "name": "Inject",
+        "props": [
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 290,
+        "y": 300,
+        "wires": [
+            [
+                "b5babfe33378d6b7"
+            ]
+        ]
+    },
+    {
+        "id": "1bee6207ece403ab",
+        "type": "HerokuPG",
+        "z": "36def501.102e7a",
+        "name": "Insert User - Template",
+        "query": "INSERT INTO \"users\"(name, number) VALUES('{{msg.topic}}', '{{msg.payload}}' );\n",
+        "postgresDB": "3057ca48.88315e",
+        "output": true,
+        "outputs": 1,
+        "x": 560,
+        "y": 380,
+        "wires": [
+            [
+                "ecea5579.2bac08"
+            ]
+        ]
+    },
+    {
+        "id": "1c27ab799ec1863b",
+        "type": "inject",
+        "z": "36def501.102e7a",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "Bob",
+        "payload": "456",
+        "payloadType": "str",
+        "x": 280,
+        "y": 380,
+        "wires": [
+            [
+                "1bee6207ece403ab"
+            ]
+        ]
+    },
+    {
+        "id": "d78fb1bf4a5b72aa",
+        "type": "inject",
+        "z": "36def501.102e7a",
+        "name": "Params",
+        "props": [
+            {
+                "p": "params",
+                "v": "[\"John\", \"123\"]",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "str",
+        "x": 270,
+        "y": 480,
+        "wires": [
+            [
+                "f83feefc8ecf48f7"
+            ]
+        ]
+    },
+    {
+        "id": "f83feefc8ecf48f7",
+        "type": "HerokuPG",
+        "z": "36def501.102e7a",
+        "name": "Insert User - Parameterised",
+        "query": "INSERT INTO \"users\"(name, number) VALUES($1, $2);\n",
+        "postgresDB": "3057ca48.88315e",
+        "output": true,
+        "outputs": 1,
+        "x": 540,
+        "y": 480,
+        "wires": [
+            [
+                "ecea5579.2bac08"
+            ]
+        ]
+    },
+    {
+        "id": "3057ca48.88315e",
+        "type": "HerokuPGConfig",
+        "name": "Heroku",
+        "dburl": "postgres://rsqjdxcqpintio:a0d81269cdfd0240dc27b120814f3d36e8d994fef116f94932fdf62aea9de7fa@ec2-54-237-135-248.compute-1.amazonaws.com:5432/ddobushh5vl9or",
+        "dburlFieldType": "str"
+    }
+]

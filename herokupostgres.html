@@ -118,3 +118,55 @@
     }
   });
 </script>
+
+
+<script type="text/x-red" data-help-name="HerokuPG">
+  <p>HerokuPG is a node for running SQL queries against Postgres on Heroku </p>
+  
+  <p>The connection is optimised for connecting to the Heroku Postgres service where the credentials are supplied as a URL in an env var<br>
+  HerokuPG sets up a console to execute queries against the configured database.</p>
+  
+  <h3>Details</h3>
+  <p>HerokuPG implements the mustache template engine within queries queries:</p>
+
+  <pre>
+  SELECT *
+  FROM table
+  WHERE id = '{{ msg.id }}'
+  </pre>
+  <p> Alternativly you can use parameterised queries by passing in an array in <msg.params>
+    <pre>
+      SELECT *
+      FROM table
+      WHERE id = '$1'
+      </pre>
+
+
+      
+  <h3>Output</h3>
+  <p><code>msg.payload</code> will contain the result object of the query.
+    <dl class="message-properties">
+      <dt>command
+          <span class="property-type">string</span>
+      </dt>
+      <dd> The sql command that was executed (e.g. "SELECT", "UPDATE", etc.) </dd>
+      <dt>rowCount
+          <span class="property-type">int </span>
+      </dt>
+      <dd> The number of rows affected by the SQL statement </dd>
+      <dt>oid
+          <span class="property-type">string</span>
+      </dt>
+      <dd> The oid returned </dd>
+      <dt>updatedColumns
+          <span class="property-type">int</span>
+      </dt>
+      <dd> rows </dd>
+      <dt>updatedCells
+          <span class="property-type">array</span>
+      </dt>
+      <dd> An array of rows returned by the command </dd>
+  </dl>
+  
+  
+</script>
