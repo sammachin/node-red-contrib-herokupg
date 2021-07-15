@@ -55,7 +55,6 @@ module.exports = function (RED) {
   function HerokuPG(config) {
     const node = this;
     RED.nodes.createNode(node, config);
-    node.topic = config.topic;
     node.config = RED.nodes.getNode(config.postgresDB);
     node.on('input', (msg) => {
       const query = mustache.render(config.query, { msg });
