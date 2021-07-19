@@ -23,39 +23,84 @@ module.exports = function (RED) {
     }
   }
 
-  function HerokuPGConfig(n) {
-    const node = this;
-    RED.nodes.createNode(node, n);
-    node.name = n.name;
-    switch (n.dburlFieldType) {
+  function PGConfig(config) {
+    console.log(config)
+    RED.nodes.createNode(this, config);
+    var node = this;
+    console.log(this.credentials)
+    node.name = config.name;
+    switch (config.dburlFieldType) {
       case 'DATABASE_URL': {
         node.dburl = new URL(process.env.DATABASE_URL)
+        node.pgPool = new Pool({
+          user: node.dburl.username,
+          password: node.dburl.password,
+          host: node.dburl.hostname,
+          port: node.dburl.port,
+          database: node.dburl.pathname.replace("/",""),
+          ssl: {
+            rejectUnauthorized: false
+          }
+        });
+        break;
       }
       case 'env': {
-        node.dburl = new URL(process.env[n.dburl])
+        node.dburl = new URL(process.env[config.credentials.dburl])
+        node.pgPool = new Pool({
+          user: node.dburl.username,
+          password: node.dburl.password,
+          host: node.dburl.hostname,
+          port: node.dburl.port,
+          database: node.dburl.pathname.replace("/",""),
+          ssl: {
+            rejectUnauthorized: false
+          }
+        });
+        break
       }
       case 'str': {
-        node.dburl = new URL(n.dburl)
+        node.dburl = new URL(config.credentials.dburl)
+        node.pgPool = new Pool({
+          user: node.dburl.username,
+          password: node.dburl.password,
+          host: node.dburl.hostname,
+          port: node.dburl.port,
+          database: node.dburl.pathname.replace("/",""),
+          ssl: {
+            rejectUnauthorized: false
+          }
+        });
+        break
+      }
+      case 'values': {
+        node.pgPool = new Pool({
+          user: config.credentials.username,
+          password: config.credentials.password,
+          host: config.credentials.hostname,
+          port: config.credentials.port,
+          database: config.credentials.database,
+          ssl: {
+            rejectUnauthorized: false
+          }
+        });
+        break
+      }
+      case 'connobj': {
+        node.pgPool = new Pool(JSON.parse(config.credentials.connobj));
+        break
       }
     } 
-    this.pgPool = new Pool({
-      user: node.dburl.username,
-      password: node.dburl.password,
-      host: node.dburl.hostname,
-      port: node.dburl.port,
-      database: node.dburl.pathname.replace("/",""),
-      ssl: {
-        rejectUnauthorized: false
-      }
-    });
+    
   }
+  RED.nodes.registerType('PGConfig', PGConfig);
 
-  RED.nodes.registerType('HerokuPGConfig', HerokuPGConfig);
 
-  function HerokuPG(config) {
+
+
+  function Postgres(config) {
     const node = this;
     RED.nodes.createNode(node, config);
-    node.config = RED.nodes.getNode(config.postgresDB);
+    node.config = RED.nodes.getNode(config.PGConfig);
     node.on('input', (msg) => {
       const query = mustache.render(config.query, { msg });
       const asyncQuery = async () => {
@@ -83,7 +128,6 @@ module.exports = function (RED) {
     });
     node.on('close', () => node.status({}));
   }
-
-  RED.nodes.registerType('HerokuPG', HerokuPG);
+  RED.nodes.registerType('Postgres', Postgres);
 }
 
