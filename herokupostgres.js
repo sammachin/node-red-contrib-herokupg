@@ -27,9 +27,8 @@ module.exports = function (RED) {
     console.log(config)
     RED.nodes.createNode(this, config);
     var node = this;
-    console.log(this.credentials)
     node.name = config.name;
-    switch (config.dburlFieldType) {
+    switch (config.dbconnFieldType) {
       case 'DATABASE_URL': {
         node.dburl = new URL(process.env.DATABASE_URL)
         node.pgPool = new Pool({
@@ -45,7 +44,7 @@ module.exports = function (RED) {
         break;
       }
       case 'env': {
-        node.dburl = new URL(process.env[config.credentials.dburl])
+        node.dburl = new URL(process.env[config.credentials.dbconn])
         node.pgPool = new Pool({
           user: node.dburl.username,
           password: node.dburl.password,
@@ -59,7 +58,7 @@ module.exports = function (RED) {
         break
       }
       case 'str': {
-        node.dburl = new URL(config.credentials.dburl)
+        node.dburl = new URL(config.credentials.dbconn)
         node.pgPool = new Pool({
           user: node.dburl.username,
           password: node.dburl.password,
@@ -92,7 +91,16 @@ module.exports = function (RED) {
     } 
     
   }
-  RED.nodes.registerType('PGConfig', PGConfig);
+  RED.nodes.registerType('PGConfig', PGConfig,{
+    credentials: {
+        dbconn: {type:"text"},  
+        username: {type:"text"},
+        password: {type:"password"},
+        host: {type:"text"},
+        port: {type:"text"},
+        database: {type:"text"},
+        connobj: {type:"text"}
+    });
 
 
 
