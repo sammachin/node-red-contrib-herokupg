@@ -24,10 +24,10 @@ module.exports = function (RED) {
   }
 
   function PGConfig(config) {
-    console.log(config)
     RED.nodes.createNode(this, config);
     var node = this;
     node.name = config.name;
+    console.log(config.dbconnFieldType)
     switch (config.dbconnFieldType) {
       case 'DATABASE_URL': {
         node.dburl = new URL(process.env.DATABASE_URL)
@@ -44,7 +44,7 @@ module.exports = function (RED) {
         break;
       }
       case 'env': {
-        node.dburl = new URL(process.env[config.credentials.dbconn])
+        node.dburl = new URL(process.env[node.credentials.dbconn])
         node.pgPool = new Pool({
           user: node.dburl.username,
           password: node.dburl.password,
@@ -57,8 +57,8 @@ module.exports = function (RED) {
         });
         break
       }
-      case 'str': {
-        node.dburl = new URL(config.credentials.dbconn)
+      case 'urlstring': {
+        node.dburl = new URL(node.credentials.dbconn)
         node.pgPool = new Pool({
           user: node.dburl.username,
           password: node.dburl.password,
@@ -73,22 +73,24 @@ module.exports = function (RED) {
       }
       case 'values': {
         node.pgPool = new Pool({
-          user: config.credentials.username,
-          password: config.credentials.password,
-          host: config.credentials.hostname,
-          port: config.credentials.port,
-          database: config.credentials.database,
+          user: node.credentials.username,
+          password: node.credentials.password,
+          host: node.credentials.host,
+          port: node.credentials.port,
+          database: node.credentials.database,
           ssl: {
             rejectUnauthorized: false
           }
         });
         break
       }
-      case 'connobj': {
-        node.pgPool = new Pool(JSON.parse(config.credentials.connobj));
+      case 'conn': {
+        node.pgPool = new Pool(JSON.parse(this.credentials.connobj));
         break
       }
+      console.log(node.pgPool)
     } 
+
     
   }
   RED.nodes.registerType('PGConfig', PGConfig,{
@@ -100,7 +102,8 @@ module.exports = function (RED) {
         port: {type:"text"},
         database: {type:"text"},
         connobj: {type:"text"}
-    });
+    }
+  });
 
 
 

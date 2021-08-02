@@ -8,7 +8,7 @@
     },
     {
         "id": "7a52702b.b1b3a",
-        "type": "HerokuPG",
+        "type": "Postgres",
         "z": "36def501.102e7a",
         "name": "SELECT all users",
         "query": "SELECT * FROM \"users\" ;",
@@ -42,7 +42,7 @@
     },
     {
         "id": "b5babfe33378d6b7",
-        "type": "HerokuPG",
+        "type": "Postgres",
         "z": "36def501.102e7a",
         "name": "Create Table",
         "query": "CREATE TABLE IF NOT EXISTS \"users\" (\n      id SERIAL PRIMARY KEY,\n      name character varying(255) NOT NULL,\n      number text\n    );\n\t\n\t\n\t",
@@ -109,7 +109,7 @@
     },
     {
         "id": "1bee6207ece403ab",
-        "type": "HerokuPG",
+        "type": "Postgres",
         "z": "36def501.102e7a",
         "name": "Insert User - Template",
         "query": "INSERT INTO \"users\"(name, number) VALUES('{{msg.topic}}', '{{msg.payload}}' );\n",
@@ -181,7 +181,7 @@
     },
     {
         "id": "f83feefc8ecf48f7",
-        "type": "HerokuPG",
+        "type": "Postgres",
         "z": "36def501.102e7a",
         "name": "Insert User - Parameterised",
         "query": "INSERT INTO \"users\"(name, number) VALUES($1, $2);\n",
@@ -195,12 +195,5 @@
                 "ecea5579.2bac08"
             ]
         ]
-    },
-    {
-        "id": "3057ca48.88315e",
-        "type": "HerokuPGConfig",
-        "name": "Heroku",
-        "dburl": "postgres://user:password@host:5432/database",
-        "dburlFieldType": "str"
     }
 ]
